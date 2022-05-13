@@ -12,26 +12,25 @@ import java.util.List;
 @Repository
 public class UserDaoImp implements UserDao {
 
-   @Autowired
-   private SessionFactory sessionFactory;
+    @Autowired
+    private SessionFactory sessionFactory;
 
-   @Override
-   public void add(User user) {
-      sessionFactory.getCurrentSession().save(user);
-   }
+    @Override
+    public void add(User user) {
+        sessionFactory.getCurrentSession().save(user);
+    }
 
-   @Override
-   @SuppressWarnings("unchecked")
-   public List<User> listUsers() {
-      TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User");
-      return query.getResultList();
-   }
+    @Override
+    public List<User> listUsers() {
+        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User");
+        return query.getResultList();
+    }
 
-   @Override
-   public User getUserByCar(String model, int series) {
-      String query = "from User u where u.car.model= :mod and u.car.series = :ser";
-      TypedQuery<User> query2 = sessionFactory.getCurrentSession().createQuery(query);
-      query2.setParameter("mod",model).setParameter("ser", series);
-      return query2.setMaxResults(1).getSingleResult();
-   }
+    @Override
+    public User getUserByCar(String model, int series) {
+        String query = "from User u where u.car.model= :mod and u.car.series = :ser";
+        TypedQuery<User> query2 = sessionFactory.getCurrentSession().createQuery(query);
+        query2.setParameter("mod", model).setParameter("ser", series);
+        return query2.setMaxResults(1).getSingleResult();
+    }
 }
